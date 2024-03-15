@@ -1,0 +1,118 @@
+    use {
+        'crusj/bookmarks.nvim',
+        branch = 'main',
+        requires = { 'kyazdani42/nvim-web-devicons' },
+        config = function()
+            require("config.bookmarks").setup()
+            require("telescope").load_extension("bookmarks")
+        end,
+        disable = true
+    }
+
+  use {
+         "simrat39/symbols-outline.nvim",
+         config = function() require("config.symbols-outline").setup() end,
+       	disable = true,
+     }
+
+   use {
+   	"akinsho/toggleterm.nvim",
+   	keys = { [[<C-\>]] },
+   	cmd = { "ToggleTerm", "TermExec" },
+   	module = { "toggleterm", "toggleterm.terminal" },
+   	config = function() require("config.toggleterm").setup() end,
+   	disable = true,
+   }
+
+
+     use({
+         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+         config = function() require("config.lsp_lines").setup() end,
+         disable = true
+     })
+
+     use({
+         "qrsforever/vim-align",
+         config = function() require("config.vim-align").setup() end,
+         disable = true,
+     })
+
+     use({
+         'Vonr/align.nvim',
+         config = function() require("config.align").setup() end,
+         disable = true,
+     })
+
+     use({
+         "willchao612/vim-diagon",
+         config = function() require("config.diagon").setup() end,
+         disable = true,
+     })
+
+     use({
+         'seblj/nvim-echo-diagnostics',
+         config = function() require("config.echo_diagnostics").setup() end,
+         disable = true,
+     })
+
+
+     use {
+         "jay-babu/mason-nvim-dap.nvim",
+         requires = {
+             "williamboman/mason.nvim",
+             "mfussenegger/nvim-dap",
+         },
+         config = function() require("config.mason.dap").setup() end,
+         disable = true,
+     }
+
+     -- AI
+     use({
+         "jackMort/ChatGPT.nvim",
+         config = function() require("config.chatgpt").setup() end,
+         requires = {
+             "MunifTanjim/nui.nvim",
+             "nvim-lua/plenary.nvim",
+             "nvim-telescope/telescope.nvim"
+         },
+         disable = true,
+     })
+
+     use({
+         "michaelb/sniprun",
+         -- need proxy or sh ./instal.sh 1 if already install cargo
+         -- run = "sh ./install.sh", -- see .nvim/bin/download.sh
+         config = function() require("config.sniprun").setup() end,
+         disable = true,
+     })
+
+     use({
+         "ms-jpq/coq_nvim",
+         branch = "coq",
+         run = ":COQdeps",
+         requires = {
+             { "ms-jpq/coq.artifacts", run = ":COQdeps", branch = "artifacts" },
+             { "ms-jpq/coq.thirdparty", branch = "3p" },
+         },
+         config = function() require("config.coq").setup() end,
+         disable = true,
+     })
+
+     use {
+         "qrsforever/FuzzyFinder",
+         config = function() require("config.fuzzyfinder").setup() end,
+         disable = true,
+     }
+
+     use {
+         "folke/trouble.nvim",
+         requires = "nvim-tree/nvim-web-devicons",
+         config = function() require("config.trouble").setup() end,
+         disable = true,
+     }
+
+     use {
+         "linux-cultist/venv-selector.nvim",
+         config = function() require("config.venv-selector").setup() end,
+         disable = true,
+     }

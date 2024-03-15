@@ -1,0 +1,106 @@
+snippet xhead3 "python file head" b
+/// @file `!p snip.rv = snip.fn`
+/// @brief
+/// @author QRS
+/// @blog qrsforever.github.io
+/// @version 1.0
+/// @date `date +"%Y-%m-%d %H:%M"`
+$0
+endsnippet
+
+snippet xtag "log prefix" b
+public static final String TAG = `!p snip.rv = snip.basename`.class.getSimpleName();
+endsnippet
+
+snippet xthread "new thread" b
+new Thread(new Runnable() {
+	@Override
+	public void run() {
+		$0
+	}
+}).start();
+endsnippet
+
+snippet xhandler "def handler" b
+class ${1:Name} extends Handler {
+	public $1(Looper looper) {
+		super(looper);
+		$0
+	}
+
+	@Override
+	public void handleMessage(Message msg) {
+		switch (msg.what) {
+
+		}
+		super.handleMessage(msg);
+	}
+}
+endsnippet
+
+snippet xlooper "def looper" b
+Looper ${1:VarName};
+if (($1 = Looper.myLooper()) ! = null ||
+	($1 = Lopper.getMainLooper()) ! = null) {
+	${2:IF-Statement}
+} else {
+	${3:Else-Statement}
+}
+endsnippet
+
+snippet xju_suite "RunWith(Suite.class)" b
+package ${0:pacakge}
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses(
+{
+})
+public class `!p snip.rv = snip.basename` {
+	$0
+}
+endsnippet
+
+snippet xju_param "RunWith(Parameterized.class)" b
+package ${0:pacakge}
+
+import static org.junit.Assert.*;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+
+@RunWith(Parameterized.class)
+public class `!p snip.rv = snip.basename` {
+	@SuppressWarnings("rawtypes")
+	@Parameters
+	public static Collection data() {
+		return Arrays.asList(new Object[][] {
+			});
+	}
+
+	public `!p snip.rv = snip.basename`(${1:param}) {
+
+	}
+}
+
+endsnippet
+
+snippet xju_test "Simple JUnit Test" b
+package ${0:pacakge}
+
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class `!p snip.rv = snip.basename` {
+
+}
+
+endsnippet

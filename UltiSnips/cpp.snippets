@@ -1,0 +1,52 @@
+snippet xhead "cpp header" b
+/***************************************************************************
+ *  `!p snip.rv = snip.fn` - ${1}
+ *
+ *  Created: `date +"%Y-%m-%d %H:%M"`
+ *
+ *  Copyright QRS
+ ****************************************************************************/
+
+$0
+endsnippet
+
+snippet xdefh "c/cpp header file define" b
+#ifndef __`!p snip.rv = snip.basename`_H__
+#define __`!p snip.rv = snip.basename`_H__
+
+$0
+
+#ifdef __cplusplus
+
+
+#endif /* __cplusplus */
+
+#endif /* __`!p snip.rv = snip.basename`_H__ */
+endsnippet
+
+snippet xcl "class .. (class)"
+class ${1:`!p snip.rv = snip.basename or "name"`} {
+public:
+	${1/(\w+).*/$1/}(${2:arguments});
+	virtual ~${1/(\w+).*/$1/}();
+
+private:
+	${0}
+}; /* class $1 */
+endsnippet
+
+snippet xns "namespace .. (namespace)"
+namespace${1/.+/ /m}${1:`!p snip.rv = snip.basename or "name"`} {
+
+${VISUAL}$0
+
+}${1/.+/ \/* /m}namespace $1${1/.+/ *\//m}
+endsnippet
+
+snippet xsection "section" b
+/*-----------------------------------------------------------------
+ *   $1
+ *-----------------------------------------------------------------*/
+
+$0
+endsnippet

@@ -1,0 +1,187 @@
+
+global !p
+
+import vim
+
+def get_post_path():
+	path = vim.eval('expand("%:p")') or ""
+	if not path or not '_posts' in path:
+		return ''
+	try:
+		return re.match(r'.*/source/_posts/(.*)', path).groups()[0]
+	except:
+		pass
+
+def gen_raw_github_path(repo, user='qrsforever'):
+	git = f"https://raw.githubusercontent.com/{user}/{repo}/master/"
+	return git + get_post_path()
+
+def gen_raw_gitee_path(repo, user='qrsforever'):
+	git = f"https://gitee.com/{user}/{repo}/blob/master/"
+	return git + get_post_path()
+
+endglobal
+
+snippet xxhead "mark down head info" b
+---
+
+title: `!p snip.rv = snip.basename`$1
+
+date: `date +"%Y-%m-%d %H:%M"`
+tags: [$2]
+categories: [$3]
+
+---
+$0
+<!-- vim-markdown-toc GFM -->
+
+* [Introduction](#introduction)
+* [References](#references)
+
+<!-- vim-markdown-toc -->
+
+[MD](`!p snip.rv = gen_raw_gitee_path("blog_source_posts")`)
+
+<!-- more -->
+
+# Introduction
+
+# References
+
+endsnippet
+
+snippet xxcenter "center DIV" b
+<div align='center'>$0</div>
+endsnippet
+
+snippet xxjump "span anchor"
+<span id="${1:id}"></span>
+endsnippet
+
+snippet xxline
+-----------------------------------------------------------------
+$0
+endsnippet
+
+snippet xxcode "```pandoc codeblock```"
+\`\`\`{.${0:lang}${1: .numberLines startFrom="1"}}
+
+\`\`\`
+endsnippet
+
+snippet xxfile "```{include=path}``` or part code file"
+\`\`\`{.${0:lang}${1: .numberLines startFrom="1"} include=`!p snip.rv = "source/_codes/" + get_post_path()`${1}}
+/pandoc code file filter beg/+1 - /pandoc code file filter end/-1
+\`\`\`
+endsnippet
+
+snippet xxhexocode "{% codeblock %}"
+{% codeblock ${1:title}${2: highlight:true${3: lang:${4:py}}${5: http:// ${6:link text}} ${7:line_number:true first_line:${8:1}}} %}
+$0
+{% endcodeblock %}
+endsnippet
+
+snippet xxhexofile "{% include_code %} for whole code file"
+{% include_code ${1:[title]} lang:${2} `!p snip.rv = get_post_path()` %}
+endsnippet
+
+snippet xxrawpost "gitee post raw file"
+[raw: `!p snip.rv = snip.basename`](`!p snip.rv = gen_raw_gitee_path("blog_source_posts")`)
+endsnippet
+
+snippet xxrawcode "gitee code raw file"
+[raw: `!p snip.rv = snip.basename`](`!p snip.rv = gen_raw_gitee_path("blog_source_codes")`)
+endsnippet
+
+snippet xxrawasset "gitee asset file"
+![`!p snip.rv = snip.basename`](`!p snip.rv = gen_raw_gitee_path("blog_source_assets")`)${1:{.center ${2:${3:width=${4:100%} ${5:height=${6:100px}}}}}}
+endsnippet
+
+snippet xxgraph "```graphviz```"
+\`\`\`{.graph ${1:.center${2: caption="${3}"}${4: fileName="${5}"}}${6: latex="true"${7: resolution="${8:1080}"${9: desity="${10:100}"}}}}
+digraph G {
+    graph [splines=ortho, rankdir=LR, nodesep=1];
+    edge  [style=solid];
+    node  [shape=circle, label=""];
+    subgraph cluster_0 {
+        grpah [];
+        edge  [];
+        node  [];
+    }
+}
+\`\`\`
+endsnippet
+
+snippet xxhexoblock "{% blockquote %}"
+{% blockquote ${1:author, source link "title"} %}
+$0
+{% endblockquote %}
+endsnippet
+
+snippet xxhexojupyter "{% asset_jupyter %}"
+{% asset_jupyter ${1:`!p snip.rv = get_post_path()[:-3] + '.ipynb'`} 1000 %}
+[EDIT](`!p snip.rv = 'http://jupyter.erlangai.cn/notebooks/_posts/' + get_post_path()[:-3] + '.ipynb'`)
+endsnippet
+
+snippet xxhexolink "{% post_link %}"
+{% post_link ${1:filepath} ${2:[optional text]} %}
+endsnippet
+
+snippet xxhexoasset "{% asset_img %} for current dir"
+{% asset_img ${1:slug} ${2:[title]} %}
+endsnippet
+
+snippet xxtable "table"
+ |
+:--:|
+ |
+endsnippet
+
+snippet xxunnum "div unnumbered"
+<div class='unnumbered'>
+$0
+</div
+endsnippet
+
+snippet xxhexoemoji "hexo emoji"
+{% emoji_hj ${1:src} ${2:,[className]} %}
+endsnippet
+
+snippet xxalert "div alert info"
+<div class="alert alert-info"><p>
+$0
+</p></div>
+endsnippet
+
+snippet xxalign "begin align"
+\begin{align*}
+
+\end{align*}
+endsnippet
+
+snippet "xxbeg( (\S+))?" "begin{} / end{}" br
+\begin{${1:`!p
+snip.rv = match.group(2) if match.group(1) is not None else "align*"`}}
+$2 &= \\
+\end{$1}$0
+endsnippet
+
+snippet xxdataset "baidu cloud disk"
+[百度云盘Datasets](https://pan.baidu.com/s/1gAFZ9gSf4pHJBt5W6_PgPQ "提取码: gxk4")
+endsnippet
+
+snippet xxshiori "insert shiori bookmark"
+<style>
+	.container {width: 100%; margin: 0 0;}
+</style>
+<iframe
+	src="https://shiori.erlangai.cn/bookmark/${1:id}/archive"
+	scrolling="no"
+	height="1000"
+	width="100%"
+	loading="lazy"
+	marginheight="0"
+	marginwidth="0"
+	frameborder="0">
+</iframe>
+endsnippet
